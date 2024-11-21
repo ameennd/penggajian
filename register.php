@@ -11,7 +11,7 @@ $query_sql = "INSERT INTO users (username, email, password, confirmpassword)
 
                 if (mysqli_query($conn, $query_sql))
                 {
-                    header('Location: login.html');
+                    header('Location: login.php');
                 } 
                  else 
                 {

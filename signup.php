@@ -50,7 +50,7 @@ include ('koneksi.php');
             />
             <label for="agree-terms">I agree to the Terms and Conditions</label>
           </div>
-          <a href="login.html">
+          <a href="login.php">
             <button type="submit" class="btn">Sign Up</button>
           </a>
         </form>
