@@ -1,0 +1,140 @@
+/* ============================================
+   Global Styles
+============================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", Arial, sans-serif;
+  background-color: #f5f7fa; /* Warna latar belakang lembut */
+  color: #333333; /* Warna teks utama */
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Memastikan footer sticky */
+}
+
+/* ============================================
+     Header Styles
+  ============================================ */
+header {
+  background: #007bff; /* Biru cerah */
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+header h1 {
+  font-size: 1.8rem;
+}
+
+header nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 15px;
+  font-size: 1rem;
+  padding: 8px 12px;
+  background: #0056b3; /* Biru gelap */
+  border-radius: 5px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+header nav a:hover {
+  background: #ff6700; /* Oranye cerah */
+  transform: scale(1.05);
+}
+
+/* ============================================
+     Main Content Styles
+  ============================================ */
+main {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex: 1;
+}
+
+/* Dashboard Grid */
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(300px, 1fr)
+  ); /* Card berdampingan */
+  gap: 20px; /* Jarak antar card */
+  padding: 20px;
+}
+/* Card Styles */
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card h2 {
+  font-size: 1.5rem;
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+.card p {
+  margin-bottom: 15px;
+  color: #666666;
+}
+
+.card a.btn {
+  display: inline-block;
+  padding: 10px 15px;
+  background: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.card a.btn:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+/* ============================================
+     Footer Styles
+  ============================================ */
+footer {
+  background: #343a40; /* Abu-abu gelap */
+  color: white;
+  text-align: center;
+  padding: 10px 15px;
+  font-size: 0.9rem;
+  margin-top: auto;
+  width: 100%;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================
+     Responsive Design
+  ============================================ */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  .dashboard {
+    grid-template-columns: 1fr; /* Semua card dalam 1 kolom */
+  }
+}
