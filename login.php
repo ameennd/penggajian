@@ -1,79 +1,91 @@
 <?php
-include('koneksi.php');
-session_start();
+session_start(); // Inisialisasi sesi
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  $login = $_POST['login'];
-  $password = $_POST['password'];
+// Cek jika pengguna sudah login
+if (isset($_SESSION['role'])) {
+    header("Location: dashboard.php"); // Redirect ke dashboard jika sudah login
+    exit();
+}
 
-  // Validasi input
-  if (empty($login) || empty($password)) {
-    $_SESSION['login_error'] = 'Username atau password tidak boleh kosong.';
-  } else {
-    // Query untuk memeriksa kecocokan login dan password
-    $sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('ss', $login, $password);
-    $stmt->execute();
-    $result = $stmt->get_result();
+// Variabel untuk pesan error
+$error = '';
 
-    if ($result->num_rows > 0) {
-      // Pengguna ditemukan, set session dan arahkan ke index.php
-      $_SESSION['login'] = $login;
-      header('Location: index.php');
-      exit();
-    } else {
-      // Pengguna tidak ditemukan
-      $_SESSION['login_error'] = 'Username atau password salah.';
+// Proses login
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Koneksi database
+    $conn = new mysqli("localhost", "root", "", "sistem_penggajian");
+
+    // Periksa koneksi
+    if ($conn->connect_error) {
+        die("Koneksi gagal: " . $conn->connect_error);
     }
-  }
+
+    // Query untuk cek kredensial pengguna
+    $stmt = $conn->prepare("SELECT id, role FROM pengguna WHERE username = ? AND password = ?");
+    $stmt->bind_param("ss", $username, $password);
+    $stmt->execute();
+    $stmt->bind_result($id, $role);
+    $stmt->fetch();
+
+    if ($id) {
+        // Jika login berhasil
+        $_SESSION['id'] = $id;
+        $_SESSION['role'] = $role;
+
+        header("Location: dashboard.php"); // Redirect ke dashboard
+        exit();
+    } else {
+        // Jika login gagal
+        $error = "Username atau password salah.";
+    }
+
+    $stmt->close();
+    $conn->close();
 }
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
-    <link rel="stylesheet" href="./css/stylelogin.css" />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-  </head>
-  <body>
-    <div class="container">
-      <div class="login-box">
-        <div class="logo">
-          <img src="logo.png" alt="Logo" />
-        </div>
-        <h2>Sign in</h2>
-        <p>Sign in and start managing!</p>
-<form action="login.php" method="POST">
-  <div class="input-group">
-    <label for="login">Login</label>
-    <input type="text" id="login" name="login" required />
-  </div>
-  <div class="input-group">
-    <label for="password">Password</label>
-    <input type="password" id="password" name="password" required />
-  </div>
-  <button type="submit" class="btn">Login</button>
-</form>
-      </div>
-    </div>
-    <?php
-if (isset($_SESSION['login_error'])) {
-  echo "<script>
-    Swal.fire({
-      icon: 'error',
-      title: 'Login Gagal',
-      text: '{$_SESSION['login_error']}',
-      showConfirmButton: true
-    });
-  </script>";
-  unset($_SESSION['login_error']);
-}
-?>
 
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body>
+    <main class="login-container">
+        <!-- Logo di belakang -->
+        <div class="login-logo">
+            <img src="img/logo.png" alt="Logo Sistem Penggajian">
+        </div>
+
+        <!-- Form Login -->
+        <form class="login-form" action="login.php" method="POST">
+            <h2>Login Sistem</h2>
+
+            <?php if (!empty($error)): ?>
+            <div class="error-message">
+                <?= htmlspecialchars($error); ?>
+            </div>
+            <?php endif; ?>
+
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="Masukkan Username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Masukkan Password" required>
+
+            <button type="submit">Login</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Sistem Penggajian. All rights reserved.</p>
+    </footer>
+</body>
+
 </html>
