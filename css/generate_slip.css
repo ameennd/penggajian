@@ -1,0 +1,128 @@
+/* Reset default style */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4; /* Latar belakang terang */
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Header styling */
+header {
+  background-color: #007bff; /* Warna biru yang lebih gelap */
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+header h1 {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+/* Main content styling */
+main {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table th,
+table td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+table th {
+  background-color: #007bff; /* Warna biru header tabel */
+  color: white;
+  font-weight: 600;
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9; /* Latar belakang baris genap lebih terang */
+}
+
+table tr:hover {
+  background-color: #e3e3e3; /* Efek hover pada baris */
+}
+
+/* Link and Action Button styling */
+a {
+  display: inline-block;
+  text-decoration: none;
+  background-color: #007bff; /* Tombol dengan warna hijau */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+a:hover {
+  background-color: #04305e; /* Efek hover pada tombol */
+}
+
+/* Back button styling */
+a.back-btn {
+  background-color: #007bff; /* Tombol kembali dengan warna biru */
+  margin-top: 20px;
+  margin-bottom: 60px; /* Tambahkan margin bawah agar tidak terlalu mepet */
+}
+
+a.back-btn:hover {
+  background-color: #04305e;
+}
+
+/* Tambahkan padding-bottom pada main untuk memberi ruang lebih */
+main {
+  padding-bottom: 60px; /* Berikan ruang di bawah main content */
+}
+
+/* Footer styling */
+footer {
+  text-align: center;
+  background-color: #343a40; /* Warna biru yang konsisten dengan header */
+  color: white;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Media Query for Responsive Design */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 22px;
+  }
+
+  table th,
+  table td {
+    font-size: 14px;
+  }
+
+  a {
+    padding: 8px 16px;
+  }
+
+  footer {
+    padding: 8px;
+  }
+}

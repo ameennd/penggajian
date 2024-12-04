@@ -1,6 +1,4 @@
 <?php
-// Halaman untuk Generate Slip Gaji
-
 session_start();
 
 // Cek apakah pengguna sudah login dan memiliki peran yang sesuai
@@ -16,12 +14,23 @@ if ($mysqli->connect_error) {
     die("Koneksi database gagal: " . $mysqli->connect_error);
 }
 
-// Query untuk mengambil data karyawan dan gaji
-$query = "SELECT karyawan.id_karyawan, karyawan.nama, karyawan.jabatan, karyawan.gaji_pokok, 
-                 SUM(CASE WHEN absensi.id_karyawan IS NOT NULL THEN 1 ELSE 0 END) AS total_hadir
-          FROM karyawan
-          LEFT JOIN absensi ON karyawan.id_karyawan = absensi.id_karyawan
-          GROUP BY karyawan.id_karyawan";
+// Jumlah hari kerja dalam 1 bulan
+$hari_kerja = 20;
+
+// Query untuk mengambil data karyawan dan menghitung total gaji berdasarkan kehadiran yang valid
+$query = "
+    SELECT 
+        karyawan.id_karyawan, 
+        karyawan.nama, 
+        karyawan.jabatan, 
+        karyawan.gaji_pokok, 
+        COUNT(absensi.id_karyawan) AS total_hadir,
+        (karyawan.gaji_pokok / $hari_kerja) * COUNT(absensi.id_karyawan) AS gaji_total
+    FROM karyawan
+    LEFT JOIN absensi ON karyawan.id_karyawan = absensi.id_karyawan 
+        AND absensi.status_approval = 'approved'
+    GROUP BY karyawan.id_karyawan
+";
 
 $result = $mysqli->query($query);
 
@@ -32,12 +41,14 @@ if (!$result) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generate Slip Gaji</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/generate_slip.css">
 </head>
+
 <body>
     <header>
         <h1>Generate Slip Gaji</h1>
@@ -56,16 +67,17 @@ if (!$result) {
                 </tr>
             </thead>
             <tbody>
-                <?php while ($row = $result->fetch_assoc()) { 
-                    $gaji_total = $row['gaji_pokok'] + ($row['total_hadir'] * 50000); // Tambahkan bonus per kehadiran
-                ?>
+                <?php while ($row = $result->fetch_assoc()) { ?>
                     <tr>
                         <td><?= htmlspecialchars($row['nama']) ?></td>
                         <td><?= htmlspecialchars($row['jabatan']) ?></td>
-                        <td><?= number_format($row['gaji_pokok'], 2) ?></td>
+                        <td>Rp <?= number_format($row['gaji_pokok'], 2, ',', '.') ?></td>
                         <td><?= $row['total_hadir'] ?></td>
-                        <td><?= number_format($gaji_total, 2) ?></td>
-                        <td><a href="cetak_slip.php?id=<?= $row['id_karyawan'] ?>">Cetak Slip</a></td>
+                        <td>Rp <?= number_format($row['gaji_total'], 2, ',', '.') ?></td>
+                        <td>
+                            <!-- Link untuk menyimpan slip gaji sementara -->
+                            <a href="save_slip.php?id=<?= $row['id_karyawan'] ?>">Simpan Slip</a>
+                        </td>
                     </tr>
                 <?php } ?>
             </tbody>
@@ -78,6 +90,7 @@ if (!$result) {
         <p>&copy; 2024 Sistem Penggajian Karyawan</p>
     </footer>
 </body>
+
 </html>
 
 <?php
