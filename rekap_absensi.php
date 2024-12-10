@@ -53,7 +53,7 @@ if ($selected_date) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['approve_date'])) {
     $approve_date = $_POST['approve_date'];
-    
+
     // Approve absensi
     $approve_query = "UPDATE absensi SET status_approval = 'approved' WHERE tanggal = ?";
     $stmt = $mysqli->prepare($approve_query);
@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['approve_date'])) {
         $gaji_final = ($gaji_pokok / $hari_kerja) * $total_kehadiran;
 
         // Simpan ke tabel laporan keuangan
-        $insert_finance_query = "INSERT INTO laporan_keuangan (id_karyawan, total_kehadiran, gaji_final, tanggal) 
+        $insert_finance_query = "INSERT INTO slip_gaji (id_karyawan, total_kehadiran, gaji_final, tanggal) 
                                  VALUES (?, ?, ?, ?)";
         $insert_stmt = $mysqli->prepare($insert_finance_query);
         $insert_stmt->bind_param("iiis", $id_karyawan, $total_kehadiran, $gaji_final, $approve_date);
@@ -118,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['approve_date'])) {
 
     <main>
         <?php if (isset($message)) { ?>
-        <p class="success-message"><?= htmlspecialchars($message) ?></p>
+            <p class="success-message"><?= htmlspecialchars($message) ?></p>
         <?php } ?>
 
         <!-- Filter Tanggal -->
@@ -127,10 +127,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['approve_date'])) {
             <select name="tanggal" id="tanggal" onchange="this.form.submit()">
                 <option value="">Semua Tanggal</option>
                 <?php while ($date_row = $date_result->fetch_assoc()) { ?>
-                <option value="<?= $date_row['tanggal'] ?>"
-                    <?= $selected_date == $date_row['tanggal'] ? 'selected' : '' ?>>
-                    <?= $date_row['tanggal'] ?>
-                </option>
+                    <option value="<?= $date_row['tanggal'] ?>" <?= $selected_date == $date_row['tanggal'] ? 'selected' : '' ?>>
+                        <?= $date_row['tanggal'] ?>
+                    </option>
                 <?php } ?>
             </select>
         </form>
@@ -147,22 +146,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['approve_date'])) {
             </thead>
             <tbody>
                 <?php while ($row = $result->fetch_assoc()) { ?>
-                <tr>
-                    <td><?= htmlspecialchars($row['nama']) ?></td>
-                    <td><?= htmlspecialchars($row['tanggal']) ?></td>
-                    <td><?= htmlspecialchars($row['jam_masuk']) ?></td>
-                    <td><?= $row['status_approval'] === 'approved' ? 'Disetujui' : 'Pending' ?></td>
-                </tr>
+                    <tr>
+                        <td><?= htmlspecialchars($row['nama']) ?></td>
+                        <td><?= htmlspecialchars($row['tanggal']) ?></td>
+                        <td><?= htmlspecialchars($row['jam_masuk']) ?></td>
+                        <td><?= $row['status_approval'] === 'approved' ? 'Disetujui' : 'Pending' ?></td>
+                    </tr>
                 <?php } ?>
             </tbody>
         </table>
 
         <!-- Tombol Approve -->
         <?php if ($selected_date) { ?>
-        <form action="rekap_absensi.php" method="POST">
-            <input type="hidden" name="approve_date" value="<?= $selected_date ?>">
-            <button type="submit">Approve Absensi</button>
-        </form>
+            <form action="rekap_absensi.php" method="POST">
+                <input type="hidden" name="approve_date" value="<?= $selected_date ?>">
+                <button type="submit">Approve Absensi</button>
+            </form>
         <?php } ?>
 
         <a href="dashboard.php">Kembali ke Dashboard</a>

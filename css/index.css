@@ -30,9 +30,9 @@ header .logo {
 }
 
 .logo-img {
-  height: 50px; /* Atur ukuran tinggi logo */
-  width: auto; /* Memastikan proporsi tetap */
-  margin-right: 10px; /* Jarak antara logo dan teks (jika ada) */
+  height: 50px;
+  width: auto;
+  margin-right: 10px;
 }
 
 header nav a {
@@ -56,6 +56,12 @@ main.container {
   padding: 20px;
 }
 
+section.cards {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -65,17 +71,15 @@ main.container {
 }
 
 .card {
-  background-color: white;
+  display: flex;
+  flex-direction: column;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
-  text-align: center;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  min-height: 350px;
+  position: relative;
 }
 
 .card h2 {
@@ -83,10 +87,16 @@ main.container {
   color: #007bff;
 }
 
-form {
+.card form {
+  margin-top: auto; /* Memastikan form ada di bagian bawah */
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.card form button {
+  margin-top: 20px;
+  align-self: stretch; /* Tombol melebar sesuai lebar kartu */
 }
 
 form label {
@@ -131,40 +141,18 @@ footer {
   font-size: 0.9rem;
 }
 
-/* Pop-up Styles */
-.popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  text-align: center;
-  display: none;
-}
+/* Responsive Design */
+@media (max-width: 768px) {
+  .card {
+    width: 100%;
+  }
 
-.popup .popup-content h3 {
-  margin-bottom: 15px;
-  color: #007bff;
-}
+  .logo-img {
+    height: 40px;
+  }
 
-.popup .popup-content button {
-  padding: 10px 15px;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.popup .popup-content button:hover {
-  background: #0056b3;
-}
-
-.hidden {
-  display: none;
+  header.navbar {
+    flex-direction: column;
+    align-items: center;
+  }
 }

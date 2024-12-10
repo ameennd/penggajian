@@ -46,7 +46,7 @@
             <!-- Card Cetak Slip Gaji -->
             <div class="card">
                 <h2>Cetak Slip Gaji</h2>
-                <form id="form-cetak" method="POST">
+                <form id="form-cetak" action="cetak_slip.php" method="POST">
                     <label for="cetak_nrk">Nomor Karyawan (NRK):</label>
                     <input type="text" id="cetak_nrk" name="cetak_nrk" placeholder="Masukkan NRK" required>
                     <button type="submit" class="btn">Cetak Slip</button>

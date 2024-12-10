@@ -1,80 +1,169 @@
-/* Global Styles */
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f8f9fa;
-  color: #333;
+/* Reset default style */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9; /* Warna latar belakang yang lembut */
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Header styling */
 header {
-  background-color: #007bff;
+  background-color: #007bff; /* Warna biru */
   color: white;
-  padding: 10px;
   text-align: center;
-}
-
-h1 {
-  margin: 0;
-  font-size: 1.8rem;
-}
-
-main {
   padding: 20px;
-  max-width: 1200px;
-  margin: auto;
+  border-bottom: 4px solid #0056b3; /* Border untuk memberikan kesan tegas */
 }
 
+header h1 {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+/* Main content styling */
+main {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px; /* Sudut melengkung */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Shadow lembut */
+}
+
+/* Table styling */
 table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
 
 table th,
 table td {
-  border: 1px solid #ddd;
-  padding: 12px;
+  padding: 15px 10px;
   text-align: left;
+  border: 1px solid #ddd;
 }
 
 table th {
-  background-color: #007bff;
+  background-color: #007bff; /* Warna header tabel */
   color: white;
-  text-transform: uppercase;
+  text-transform: uppercase; /* Teks kapital */
+  font-weight: bold;
 }
 
 table tr:nth-child(even) {
-  background-color: #f9f9f9;
+  background-color: #f9f9f9; /* Latar belakang baris genap */
 }
 
 table tr:hover {
-  background-color: #e2e6ea;
+  background-color: #eef6ff; /* Efek hover biru muda */
 }
 
-.back-btn {
-  display: inline-block;
+/* Dropdown styling */
+form select {
   padding: 10px 15px;
-  background-color: #007bff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+}
+
+form select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Efek fokus */
+}
+
+/* Button styling */
+form button.btn-approve {
+  background-color: #28a745; /* Tombol hijau */
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form button.btn-approve:hover {
+  background-color: #218838;
+}
+
+/* Back button styling */
+a.back-btn {
+  display: inline-block;
+  background-color: #007bff; /* Tombol biru */
   color: white;
   text-decoration: none;
+  padding: 12px 20px;
   border-radius: 5px;
+  font-size: 16px;
   font-weight: bold;
-  transition: background-color 0.3s ease;
   margin-top: 20px;
+  text-align: center;
+  transition: background-color 0.3s ease;
 }
 
-.back-btn:hover {
+a.back-btn:hover {
   background-color: #0056b3;
 }
 
+/* Success message styling */
+p.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Footer styling */
 footer {
   text-align: center;
-  padding: 10px;
-  background-color: #343a40;
+  background-color: #343a40; /* Warna gelap */
   color: white;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+  padding: 15px;
+  margin-top: 30px;
+  border-top: 4px solid #23272b;
+}
+
+footer p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Media Query for Responsive Design */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 22px;
+  }
+
+  table th,
+  table td {
+    font-size: 14px;
+  }
+
+  form select {
+    font-size: 14px;
+  }
+
+  form button.btn-approve,
+  a.back-btn {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
 }

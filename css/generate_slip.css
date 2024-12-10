@@ -63,23 +63,6 @@ table tr:hover {
   background-color: #e3e3e3; /* Efek hover pada baris */
 }
 
-/* Link and Action Button styling */
-a {
-  display: inline-block;
-  text-decoration: none;
-  background-color: #007bff; /* Tombol dengan warna hijau */
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  text-align: center;
-  margin-top: 10px;
-  font-weight: bold;
-}
-
-a:hover {
-  background-color: #04305e; /* Efek hover pada tombol */
-}
-
 /* Back button styling */
 a.back-btn {
   background-color: #007bff; /* Tombol kembali dengan warna biru */
@@ -94,6 +77,34 @@ a.back-btn:hover {
 /* Tambahkan padding-bottom pada main untuk memberi ruang lebih */
 main {
   padding-bottom: 60px; /* Berikan ruang di bawah main content */
+}
+
+/* Styling tombol "Simpan Slip" */
+button.save-slip {
+  background-color: #007bff; /* Warna biru */
+  color: white;
+  padding: 8px 15px; /* Ukuran tombol */
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  text-align: center;
+  display: inline-block;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow untuk efek */
+}
+
+button.save-slip:hover {
+  background-color: #0056b3; /* Warna biru lebih gelap */
+  transform: translateY(-2px); /* Efek hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow saat hover */
+}
+
+button.save-slip:active {
+  background-color: #004085; /* Warna biru lebih gelap */
+  transform: translateY(0); /* Reset efek saat klik */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Reset shadow */
 }
 
 /* Footer styling */

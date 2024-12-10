@@ -1,33 +1,33 @@
 <?php
 session_start();
 
-// Cek apakah pengguna adalah staff payroll
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'payroll') {
-    header("Location: login.php");
+    header("Content-Type: application/json");
+    echo json_encode(["status" => "error", "message" => "Akses ditolak."]);
     exit();
 }
 
-// Koneksi database
 $mysqli = new mysqli("localhost", "root", "", "sistem_penggajian");
 
 if ($mysqli->connect_error) {
-    die("Koneksi database gagal: " . $mysqli->connect_error);
+    header("Content-Type: application/json");
+    echo json_encode(["status" => "error", "message" => "Koneksi database gagal."]);
+    exit();
 }
 
-// Ambil ID karyawan
 $id_karyawan = $_GET['id'];
 
-// Simpan slip gaji sementara
 $query = "INSERT INTO slip_gaji (id_karyawan, status_approval, created_at) VALUES (?, 'pending', NOW())";
 $stmt = $mysqli->prepare($query);
 $stmt->bind_param("i", $id_karyawan);
 
 if ($stmt->execute()) {
-    echo "Slip gaji berhasil disimpan dan menunggu approval direktur.";
+    header("Content-Type: application/json");
+    echo json_encode(["status" => "success", "message" => "Slip gaji berhasil disimpan."]);
 } else {
-    echo "Gagal menyimpan slip gaji: " . $stmt->error;
+    header("Content-Type: application/json");
+    echo json_encode(["status" => "error", "message" => "Gagal menyimpan slip gaji."]);
 }
 
 $stmt->close();
 $mysqli->close();
-?>
